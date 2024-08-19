@@ -124,3 +124,9 @@ GIT_PS1_SHOWSTASHSTATE='y'
 GIT_PS1_SHOWUNTRACKEDFILES='y'
 #GIT_PS1_SHOWUPSTREAM='auto'
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w$(__git_ps1)\[\033[00m\] '
+
+source ~/.custom/custom.sh
+alias ts="tmux-sessionizer"
+alias tl="tmux ls"
+alias ta="tmux a"
+alias tn="tmux new-session -A -s $1"
