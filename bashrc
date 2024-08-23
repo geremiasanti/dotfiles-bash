@@ -56,8 +56,15 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# git for custom prompt
+source /etc/bash_completion.d/git-prompt
+GIT_PS1_DESCRIBE_STYLE='contains'
+GIT_PS1_SHOWDIRTYSTATE='y'
+GIT_PS1_SHOWSTASHSTATE='y'
+GIT_PS1_SHOWUNTRACKEDFILES='y'
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\[\033[01;35m\]$(__git_ps1)\[\033[00m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -116,15 +123,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source /etc/bash_completion.d/git-prompt
-GIT_PS1_DESCRIBE_STYLE='contains'
-GIT_PS1_SHOWCOLORHINTS='y'
-GIT_PS1_SHOWDIRTYSTATE='y'
-GIT_PS1_SHOWSTASHSTATE='y'
-GIT_PS1_SHOWUNTRACKEDFILES='y'
-#GIT_PS1_SHOWUPSTREAM='auto'
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w$(__git_ps1)\[\033[00m\] '
-
+# custom commands
 source ~/.config/custom/custom.sh
 alias ts="tmux-sessionizer"
 alias tn="tmux new-session -A -s $1"
