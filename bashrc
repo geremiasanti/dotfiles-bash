@@ -123,10 +123,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# custom commands
+# CUSTOM COMMANDS
+# tmux
 source ~/.config/custom/custom.sh
 alias ts="tmux-sessionizer"
 alias tn="tmux new-session -A -s $1"
 alias tl="tmux ls"
 alias ta="tmux a"
 alias tk="tmux kill-server"
+# git
+alias gl="git log --oneline --graph --decorate --all"
