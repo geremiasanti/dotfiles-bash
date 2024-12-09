@@ -56,15 +56,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# git for custom prompt
-source /etc/bash_completion.d/git-prompt
-GIT_PS1_DESCRIBE_STYLE='contains'
-GIT_PS1_SHOWDIRTYSTATE='y'
-GIT_PS1_SHOWSTASHSTATE='y'
-GIT_PS1_SHOWUNTRACKEDFILES='y'
-
 if [ "$color_prompt" = yes ]; then
-	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;35m\]\w\[\033[00m\]\[\033[01;36m\]$(__git_ps1)\[\033[00m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -123,6 +116,29 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Added by `rbenv init` on Mon Nov  4 02:00:21 PM CET 2024
+eval "$(~/.rbenv/bin/rbenv init - --no-rehash bash)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# git for custom prompt
+source /etc/bash_completion.d/git-prompt
+GIT_PS1_DESCRIBE_STYLE='contains'
+GIT_PS1_SHOWDIRTYSTATE='y'
+GIT_PS1_SHOWSTASHSTATE='y'
+GIT_PS1_SHOWUNTRACKEDFILES='y'
+
+# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PROMPT_COMMAND='PS1_CMD1=$(__git_ps1)'
+PS1='\[\e[35;1m\]\w\[\e[0m\]\[\e[36;1m\]${PS1_CMD1}\[\e[0m\]\n\[\e[32;1m\]$ \[\e[0m\]'
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # CUSTOM COMMANDS
 # tmux
 source ~/.config/custom/custom.sh
@@ -133,9 +149,4 @@ alias ta="tmux a"
 alias tk="tmux kill-server"
 # git
 alias gl="git log --oneline --graph --decorate --all"
-
-# rvm
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+. "$HOME/.cargo/env"
